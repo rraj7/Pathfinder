@@ -1,12 +1,13 @@
 package main
 
-import (	"fmt"	"sort"	"strconv")
+import (	"fmt"	;"sort";	"strconv");
 
 type Graph struct {	Edges []*Edge	
 	Nodes []*Node}
 
 type Edge struct {	Source *Node
-		Destination  *Node	Weight   int
+		Destination  *Node
+		Weight   int
 	}
 
 type Node struct {	Name string }
@@ -161,10 +162,11 @@ func main() {
 	h := &Node{Name: "Mike's digs"}
 	i := &Node{Name: "Cam's dwelling"} 
 	j := &Node{Name: "Nathan's flat"}
+	k := &Node{Name: "Kirk's farm"}
 
 	graph := Graph{}
 	graph.AddEdge(a, c, 9)
-	graph.AddEdge(a, b, 4)
+	graph.AddEdge(a, e, 4)
 	graph.AddEdge(c, b, 18)
 	graph.AddEdge(c, d, 8)
 	graph.AddEdge(b, d, 4)
@@ -174,7 +176,20 @@ func main() {
 	graph.AddEdge(f, g, 1)
 	graph.AddEdge(g, f, 2)
 	graph.AddEdge(h, i, 4)
+	graph.AddEdge(j, k, 3)
 
 
 	fmt.Println(graph.Dijkstra(a))
+	
+	/*fmt.Println(graph.Dijkstra(b))
+	 fmt.Println(graph.Dijkstra(c))
+	fmt.Println(graph.Dijkstra(d))
+	fmt.Println(graph.Dijkstra(e))
+	fmt.Println(graph.Dijkstra(f))
+	fmt.Println(graph.Dijkstra(g))
+	fmt.Println(graph.Dijkstra(h))
+	fmt.Println(graph.Dijkstra(i))
+	fmt.Println(graph.Dijkstra(j))
+	fmt.Println(graph.Dijkstra(k)) */
+
 }
