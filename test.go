@@ -1,15 +1,12 @@
 package main
 
-import (
-	"reflect"
-	"testing"
-)
+import (	"reflect"	"testing")
 
 func Test_Graph(t *testing.T) {
-	a := &Node{Name: "a"}
-	b := &Node{Name: "b"}
-	c := &Node{Name: "c"}
-	d := &Node{Name: "d"}
+	a := &Node{Name: "Kruthika's abode"}
+	b := &Node{Name: "Brian's apartment"}
+	c := &Node{Name: "Greg's casa"}
+	d := &Node{Name: "Wesley's condo"}
 
 	g := Graph{}
 	g.AddEdge(a, b, 1)
@@ -40,29 +37,29 @@ func Test_Graph(t *testing.T) {
 
 		edges := []*Edge{
 			{
-				Parent: a,
-				Child:  b,
-				Cost:   1,
+				Source: a,
+				Destination:  b,
+				Weight:   1,
 			},
 			{
-				Parent: a,
-				Child:  c,
-				Cost:   2,
+				Source: a,
+				Destination:  c,
+				Weight:   2,
 			},
 			{
-				Parent: b,
-				Child:  d,
-				Cost:   9,
+				Source: b,
+				Destination:  d,
+				Weight:   9,
 			},
 			{
-				Parent: c,
-				Child:  b,
-				Cost:   10,
+				Source: c,
+				Destination:  b,
+				Weight:   10,
 			},
 			{
-				Parent: c,
-				Child:  d,
-				Cost:   5,
+				Source: c,
+				Destination:  d,
+				Weight:   5,
 			},
 		}
 		if !reflect.DeepEqual(g.Edges, edges) {
@@ -70,17 +67,17 @@ func Test_Graph(t *testing.T) {
 		}
 	})
 
-	t.Run("NewCostTable", func(t *testing.T) {
-		costTable := g.NewCostTable(a)
+	t.Run("NewWeightTable", func(t *testing.T) {
+		WeightTable := g.NewWeightTable(a)
 
-		expectedCostTable := make(map[*Node]int)
-		expectedCostTable[a] = 0
-		expectedCostTable[b] = Infinity
-		expectedCostTable[c] = Infinity
-		expectedCostTable[d] = Infinity
+		expectedWeightTable := make(map[*Node]int)
+		expectedWeightTable[a] = 0
+		expectedWeightTable[b] = Infinity
+		expectedWeightTable[c] = Infinity
+		expectedWeightTable[d] = Infinity
 
-		if !reflect.DeepEqual(costTable, expectedCostTable) {
-			t.Errorf("expected %v, got %v", expectedCostTable, costTable)
+		if !reflect.DeepEqual(WeightTable, expectedWeightTable) {
+			t.Errorf("expected %v, got %v", expectedWeightTable, WeightTable)
 		}
 
 	})
@@ -89,14 +86,14 @@ func Test_Graph(t *testing.T) {
 
 		expectedEdges := []*Edge{
 			{
-				Parent: a,
-				Child:  b,
-				Cost:   1,
+				Source: a,
+				Destination:  b,
+				Weight:   1,
 			},
 			{
-				Parent: a,
-				Child:  c,
-				Cost:   2,
+				Source: a,
+				Destination:  c,
+				Weight:   2,
 			},
 		}
 
@@ -106,8 +103,8 @@ func Test_Graph(t *testing.T) {
 
 	})
 	t.Run("getClosestVisitedNode", func(t *testing.T) {
-		costTable := g.NewCostTable(a)
-		node := getClosestNonVisitedNode(costTable, []*Node{})
+		WeightTable := g.NewWeightTable(a)
+		node := getClosestNonVisitedNode(WeightTable, []*Node{})
 
 		if node != a {
 			t.Errorf("expected %v, got %v", a, node)
@@ -115,19 +112,19 @@ func Test_Graph(t *testing.T) {
 
 	})
 	t.Run("Dijkstra", func(t *testing.T) {
-		costTable := g.Dijkstra(a)
+		WeightTable := g.Dijkstra(a)
 
-		if costTable[a] != 0 {
-			t.Errorf("expected %d, got %d", 0, costTable[a])
+		if WeightTable[a] != 0 {
+			t.Errorf("expected %d, got %d", 0, WeightTable[a])
 		}
-		if costTable[b] != 1 {
-			t.Errorf("expected %d, got %d", 1, costTable[b])
+		if WeightTable[b] != 1 {
+			t.Errorf("expected %d, got %d", 1, WeightTable[b])
 		}
-		if costTable[c] != 2 {
-			t.Errorf("expected %d, got %d", 2, costTable[c])
+		if WeightTable[c] != 2 {
+			t.Errorf("expected %d, got %d", 2, WeightTable[c])
 		}
-		if costTable[d] != 7 {
-			t.Errorf("expected %d, got %d", 7, costTable[d])
+		if WeightTable[d] != 7 {
+			t.Errorf("expected %d, got %d", 7, WeightTable[d])
 		}
 	})
 }
